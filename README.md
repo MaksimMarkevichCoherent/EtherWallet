@@ -68,18 +68,6 @@ just be patient, the transaction might take a while to be processed.
 Feel free to check out the smart contract used in this project [https://github.com/allanclempe/ether-wallet-contract](https://github.com/allanclempe/ether-wallet-contract)
 
 
-### Buy me a coffee
-
-If you enjoy my work, a small donation would be greatly appreciated.
-
-|                                    BTC                                     |                                     ETH                                      |
-| :------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-| <img src="https://faucet.clempe.dev/images/btc-address.png" width="150" /> | <img src="https://faucet.clempe.dev/images/eth-address.png"  width="150"  /> |
-
 ### License
 
 Copyright © 2019-present Allan Clempe. This source code is licensed under the MIT license found in the [LICENSE.txt](https://github.com/allanclempe/ether-wallet-flutter/blob/master/LICENSE.txt) file.
-
----
-
-dart wallet cryto flutter eth smart contracts - by [Allan Clempe](https://twitter.com/aclempe)
