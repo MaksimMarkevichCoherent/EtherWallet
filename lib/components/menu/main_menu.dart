@@ -28,7 +28,7 @@ class MainMenu extends StatelessWidget {
             trailing: const Icon(WalletIcons.gem, color: Colors.blue),
             onTap: () async {
               final url =
-                  'https://faucet.clempe.dev?address=$address&network=${network.name.toLowerCase()}';
+                  'https://faucet.wallet.dev?address=$address&network=${network.name.toLowerCase()}';
               if (await canLaunch(url)) {
                 await launch(url);
               } else {
