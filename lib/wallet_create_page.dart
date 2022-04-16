@@ -4,6 +4,7 @@ import 'package:etherwallet/model/wallet_setup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import 'components/base_app_bar.dart';
 import 'components/wallet/display_mnemonic.dart';
 
 class WalletCreatePage extends HookWidget {
@@ -16,32 +17,38 @@ class WalletCreatePage extends HookWidget {
     final store = useWalletSetup(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
+      appBar: BaseAppBar(
+        leading: Container(),
+        titleString: title,
       ),
-      body: store.state.step == WalletCreateSteps.display
-          ? DisplayMnemonic(
-              mnemonic: store.state.mnemonic!,
-              onNext: () async {
-                store.goto(WalletCreateSteps.confirm);
-              },
-            )
-          : ConfirmMnemonic(
-              errors: store.state.errors?.toList(),
-              onConfirm: !store.state.loading
-                  ? (confirmedMnemonic) async {
-                      if (await store.confirmMnemonic(confirmedMnemonic)) {
-                        Navigator.of(context).popAndPushNamed('/');
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: store.state.step == WalletCreateSteps.display
+            ? DisplayMnemonic(
+                mnemonic: store.state.mnemonic!,
+                onNext: () async {
+                  store.goto(WalletCreateSteps.confirm);
+                },
+              )
+            : ConfirmMnemonic(
+                errors: store.state.errors?.toList(),
+                onConfirm: !store.state.loading
+                    ? (confirmedMnemonic) async {
+                        if (await store.confirmMnemonic(confirmedMnemonic)) {
+                          Navigator.of(context).popAndPushNamed('/');
+                        }
                       }
-                    }
-                  : null,
-              onGenerateNew: !store.state.loading
-                  ? () async {
-                      store.generateMnemonic();
-                      store.goto(WalletCreateSteps.display);
-                    }
-                  : null,
-            ),
+                    : null,
+                onGenerateNew: !store.state.loading
+                    ? () async {
+                        store.generateMnemonic();
+                        store.goto(WalletCreateSteps.display);
+                      }
+                    : null,
+              ),
+      ),
     );
   }
 }

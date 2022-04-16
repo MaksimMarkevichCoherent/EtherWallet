@@ -1,3 +1,4 @@
+import 'package:etherwallet/components/base_app_bar.dart';
 import 'package:etherwallet/components/wallet/import_wallet_form.dart';
 import 'package:etherwallet/context/setup/wallet_setup_provider.dart';
 import 'package:etherwallet/model/wallet_setup.dart';
@@ -13,31 +14,36 @@ class WalletImportPage extends HookWidget {
   Widget build(BuildContext context) {
     final store = useWalletSetup(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
+      appBar: BaseAppBar(
+        titleString: title,
       ),
-      body: ImportWalletForm(
-        errors: store.state.errors?.toList(),
-        onImport: !store.state.loading
-            ? (type, value) async {
-                switch (type) {
-                  case WalletImportType.mnemonic:
-                    if (!await store.importFromMnemonic(value)) {
-                      return;
-                    }
-                    break;
-                  case WalletImportType.privateKey:
-                    if (!await store.importFromPrivateKey(value)) {
-                      return;
-                    }
-                    break;
-                  default:
-                    break;
-                }
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: ImportWalletForm(
+          errors: store.state.errors?.toList(),
+          onImport: !store.state.loading
+              ? (type, value) async {
+                  switch (type) {
+                    case WalletImportType.mnemonic:
+                      if (!await store.importFromMnemonic(value)) {
+                        return;
+                      }
+                      break;
+                    case WalletImportType.privateKey:
+                      if (!await store.importFromPrivateKey(value)) {
+                        return;
+                      }
+                      break;
+                    default:
+                      break;
+                  }
 
-                Navigator.of(context).popAndPushNamed('/');
-              }
-            : null,
+                  Navigator.of(context).popAndPushNamed('/');
+                }
+              : null,
+        ),
       ),
     );
   }

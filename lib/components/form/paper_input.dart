@@ -31,6 +31,10 @@ class PaperInput extends StatelessWidget {
         labelText: labelText,
         hintText: hintText,
         errorText: errorText,
+        labelStyle: TextStyle(color: Colors.orange),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.orange),
+        )
       ),
     );
   }

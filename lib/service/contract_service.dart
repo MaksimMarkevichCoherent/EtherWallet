@@ -75,6 +75,10 @@ class ContractService implements IContractService {
     return client.getBalance(from);
   }
 
+  Future<TransactionReceipt?> getEthTransactions(String hash) async {
+    return client.getTransactionReceipt(hash);
+  }
+
   @override
   Future<BigInt> getTokenBalance(EthereumAddress from) async {
     final response = await client.call(

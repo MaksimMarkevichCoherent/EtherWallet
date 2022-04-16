@@ -64,10 +64,9 @@ class IntroPage extends StatelessWidget {
                 ),
                 WalletButton(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/create', (route) => false);
+                    Navigator.of(context).pushNamedAndRemoveUntil('/create', (Route<dynamic> route) => false);
                   },
-                  label: 'Sign Up',
+                  label: 'Create wallet',
                 ),
                 const SizedBox(height: 20),
                 Center(
@@ -76,7 +75,7 @@ class IntroPage extends StatelessWidget {
                       Navigator.of(context).pushNamed('/import');
                     },
                     child: const Text(
-                      'Recover your account',
+                      'Import your wallet',
                       style: TextStyle(
                         fontSize: 16.0,
                         decoration: TextDecoration.underline,

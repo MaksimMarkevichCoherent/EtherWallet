@@ -1,3 +1,4 @@
+import 'package:etherwallet/components/welcomeButton/welcome_button.dart';
 import 'package:flutter/cupertino.dart';
 
 class PaperForm extends StatelessWidget {
@@ -12,15 +13,13 @@ class PaperForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
-      child: Container(
-        constraints: const BoxConstraints(maxWidth: 480),
-        child: Padding(
-          padding: EdgeInsets.all(padding),
-          child: Column(children: [
-            ...children,
-            ..._buildButtons(),
-          ]),
-        ),
+      child: Padding(
+        padding: EdgeInsets.all(padding),
+        child: Column(children: [
+          ...children,
+          const SizedBox(height: 100),
+          ..._buildButtons(),
+        ]),
       ),
     );
   }
@@ -35,7 +34,7 @@ class PaperForm extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: actionButtons!,
-      )
+      ),
     ];
   }
 }
