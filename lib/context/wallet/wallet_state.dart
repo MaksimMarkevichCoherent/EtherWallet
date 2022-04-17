@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:etherwallet/model/network_type.dart';
 import 'package:etherwallet/model/wallet.dart';
 
@@ -18,10 +19,11 @@ class NetworkChanged extends WalletAction {
 }
 
 class BalanceUpdated extends WalletAction {
-  BalanceUpdated(this.ethBalance, this.tokenBalance);
+  BalanceUpdated(this.ethBalance);
   final BigInt ethBalance;
-  final BigInt tokenBalance;
 }
+
+class ErrorBalance extends WalletAction {}
 
 class UpdatingBalance extends WalletAction {}
 
@@ -48,8 +50,11 @@ Wallet reducer(Wallet state, WalletAction action) {
   if (action is BalanceUpdated) {
     return state.rebuild((b) => b
       ..loading = false
-      ..ethBalance = action.ethBalance
-      ..tokenBalance = action.tokenBalance);
+      ..ethBalance = action.ethBalance);
+  }
+
+  if (action is ErrorBalance) {
+    return state.rebuild((b) => b..errors = ListBuilder<String>());
   }
 
   return state;

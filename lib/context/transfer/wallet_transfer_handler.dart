@@ -32,7 +32,7 @@ class WalletTransferHandler {
       await _contractLocator.getInstance(network).send(
         privateKey!,
         EthereumAddress.fromHex(to),
-        BigInt.from(double.parse(amount) * pow(10, 18)),
+          double.parse(amount),
         onTransfer: (from, to, value) {
           completer.complete(true);
         },

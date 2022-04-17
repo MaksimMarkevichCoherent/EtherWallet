@@ -75,6 +75,7 @@ class WalletHandler {
       }
 
       print('======= balance updated =======');
+      print('value: $value');
 
       await refreshBalance();
     });
@@ -97,13 +98,18 @@ class WalletHandler {
 
     _store.dispatch(UpdatingBalance());
 
-    final tokenBalance = await contractService
-        .getTokenBalance(web3.EthereumAddress.fromHex(state.address!));
+    //final tokenBalance = await contractService
+    //    .getTokenBalance(web3.EthereumAddress.fromHex(state.address!));
 
-    final ethBalance = await contractService
-        .getEthBalance(web3.EthereumAddress.fromHex(state.address!));
+    try {
+      final ethBalance = await contractService
+          .getEthBalance(web3.EthereumAddress.fromHex(state.address!));
 
-    _store.dispatch(BalanceUpdated(ethBalance.getInWei, tokenBalance));
+      _store.dispatch(BalanceUpdated(ethBalance.getInWei));
+    } catch (e) {
+      print('polygon error');
+      _store.dispatch(BalanceUpdated(BigInt.from(0)));
+    }
   }
 
   Future<void> resetWallet() async {

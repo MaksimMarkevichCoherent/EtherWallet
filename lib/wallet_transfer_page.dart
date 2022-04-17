@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'components/base_app_bar.dart';
 import 'components/wallet/loading.dart';
 
 class WalletTransferPage extends HookWidget {
@@ -24,12 +25,18 @@ class WalletTransferPage extends HookWidget {
 
     return Scaffold(
       key: key,
-      appBar: AppBar(
-        title: Text(title),
+      appBar: BaseAppBar(
+        titleString: title,
+        onBackPress: () {
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+        },
         actions: <Widget>[
           if (!kIsWeb)
             IconButton(
-              icon: const Icon(Icons.camera_alt),
+              icon: const Icon(
+                Icons.camera_alt,
+                color: Colors.black,
+              ),
               onPressed: !transferStore.state.loading
                   ? () {
                       Navigator.of(context).pushNamed(

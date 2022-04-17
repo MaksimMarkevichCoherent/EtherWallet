@@ -3,8 +3,10 @@ import 'package:etherwallet/qrcode_reader_page.dart';
 import 'package:etherwallet/service/configuration_service.dart';
 import 'package:etherwallet/utils/route_utils.dart';
 import 'package:etherwallet/wallet_create_page.dart';
+import 'package:etherwallet/wallet_history_page.dart';
 import 'package:etherwallet/wallet_import_page.dart';
 import 'package:etherwallet/wallet_main_page.dart';
+import 'package:etherwallet/wallet_receive_page.dart';
 import 'package:etherwallet/wallet_transfer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -26,8 +28,7 @@ Map<String, WidgetBuilder> getRoutes(context) {
 
       return const IntroPage();
     },
-    '/create': (BuildContext context) =>
-        WalletSetupProvider(builder: (context, store) {
+    '/create': (BuildContext context) => WalletSetupProvider(builder: (context, store) {
           useEffect(() {
             store.generateMnemonic();
           }, []);
@@ -49,6 +50,12 @@ Map<String, WidgetBuilder> getRoutes(context) {
     '/qrcode_reader': (BuildContext context) => QRCodeReaderPage(
           title: 'Scan QRCode',
           onScanned: ModalRoute.of(context)?.settings.arguments as OnScanned?,
-        )
+        ),
+    '/receive': (BuildContext context) => WalletReceivePage(
+          address: ModalRoute.of(context)!.settings.arguments as String,
+        ),
+    '/history': (BuildContext context) => HistoryPage(
+          address: ModalRoute.of(context)!.settings.arguments as String,
+        ),
   };
 }

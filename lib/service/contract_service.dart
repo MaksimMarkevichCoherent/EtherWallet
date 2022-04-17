@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:web3dart/web3dart.dart';
 
 typedef TransferEvent = void Function(
@@ -10,7 +11,7 @@ typedef TransferEvent = void Function(
 abstract class IContractService {
   Future<Credentials> getCredentials(String privateKey);
   Future<String?> send(
-      String privateKey, EthereumAddress receiver, BigInt amount,
+      String privateKey, EthereumAddress receiver, double amount,
       {TransferEvent? onTransfer, Function(Object exeception)? onError});
   Future<BigInt> getTokenBalance(EthereumAddress from);
   Future<EtherAmount> getEthBalance(EthereumAddress from);
@@ -34,7 +35,7 @@ class ContractService implements IContractService {
 
   @override
   Future<String?> send(
-      String privateKey, EthereumAddress receiver, BigInt amount,
+      String privateKey, EthereumAddress receiver, double amount,
       {TransferEvent? onTransfer, Function(Object exeception)? onError}) async {
     final credentials = await getCredentials(privateKey);
     final from = await credentials.extractAddress();
@@ -52,11 +53,16 @@ class ContractService implements IContractService {
     try {
       final transactionId = await client.sendTransaction(
         credentials,
+        // Transaction(
+        //   from: from,
+        //     value: EtherAmount.fromUnitAndValue(EtherUnit.ether, BigInt.from(amount)),
+        // ),
         Transaction.callContract(
           contract: contract,
           function: _sendFunction(),
-          parameters: [receiver, amount],
+          parameters: [receiver, BigInt.from(amount)],
           from: from,
+          //
         ),
         chainId: networkId,
       );
